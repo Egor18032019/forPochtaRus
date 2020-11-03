@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- <link rel="shortcut icon" href="" type="image/x-icon"> -->
+  <!--TODO сделать иконку -->
+  <title>Нормализация баз от Почты России</title>
+</head>
+
+<body>
+
+  <div id="root"></div>
+  <!-- <script src="/build/bundle.js"></script> -->
+  <script src="/bundle.js"></script>
+
+
+  <!-- Сообщение об успешной отправки на `сервер` -->
+  <template id="success">
+    <div class="success">
+      <p class="success__message">Все получилось</p>
+    </div>
+  </template>
+
+  <!-- Сообщение об ошибке отправки на `сервер`-->
+  <template id="error">
+    <div class="error">
+      <p class="error__message">Ошибка загрузки</p>
+      <button class="error__button">Попробовать снова</button>
+    </div>
+  </template>
+
+
+</body>
+
+</html>
