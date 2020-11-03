@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "module": "commonjs",
-  "homepage": "Пока нет",
+  "homepage": "https://github.com/Egor18032019/forPochtaRus",
   "description": "Для Хакатона",
   "scripts": {
     "build": "webpack --mode production",
