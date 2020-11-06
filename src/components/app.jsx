@@ -2,9 +2,10 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import ImportButton from "./import_button.jsx";
+import Main from "./main.jsx";
 import Footer from "./footer.jsx";
 import {Operation} from "./data-reducer.js";
+import {getPlacesNormilse} from "./selectors.js";
 
 class App extends PureComponent {
   constructor(props) {
@@ -12,15 +13,16 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {getNewData} = this.props;
+    const {getNewData, places} = this.props;
 
     return (
-      <div>
-        <ImportButton
+      <main>
+        <Main
           getNewData={getNewData}
+          places={places}
         />
         <Footer />
-      </div>
+      </main>
     );
   }
 
@@ -34,7 +36,7 @@ class App extends PureComponent {
             {this._renderApp()}
           </Route>
           <Route exact path="/property">
-            <ImportButton
+            <Main
               getNewData={getNewData}
             />
           </Route>
@@ -53,14 +55,17 @@ const mapDispatchToTitle = (dispatch) => ({
   },
 });
 
-const mapStateToProps = () => {
+const mapStateToProps = (store) => {
   return {
+    places: getPlacesNormilse(store),
+
   };
 };
 
 App.propTypes = {
-  getNewData: PropTypes.func.isRequired
+  getNewData: PropTypes.func.isRequired,
+  places: PropTypes.object
 };
 
 export {App};
-export default connect(mapStateToProps, mapDispatchToTitle)(App); // первым стате а вторым фдиспатчеры
+export default connect(mapStateToProps, mapDispatchToTitle)(App); // первым стате а вторым диспатчеры

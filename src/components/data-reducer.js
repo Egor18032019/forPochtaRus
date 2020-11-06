@@ -14,7 +14,7 @@ const initialState = {
   page: `mainPage`,
   isDataLoaded: false,
   isDataPost: false,
-  placesNormilse: [],
+  placesNormilse: {},
   errorMessage: ``,
 };
 
@@ -24,7 +24,7 @@ const dataReducer = (state = initialState, action) => {
     case ActionType.NORMILISE_BASA:
       return Object.assign({}, state, {
         page: `answerPage`,
-        placesNormilse: action.payload.name,
+        placesNormilse: action.payload,
       });
   }
   return state;
@@ -32,7 +32,7 @@ const dataReducer = (state = initialState, action) => {
 
 
 const ActionActive = {
-  PostOnServer: (newDataObj) => ({
+  setValidationData: (newDataObj) => ({
     type: ActionType.NORMILISE_BASA, // обязательно поле type
     payload: newDataObj // именовать файл как город ?
   })
@@ -43,22 +43,30 @@ const Operation = {
   postData: (places) => (dispatch, getState, api) => {
     // TODO подумать о загруки именно по городам- тарифный план более дешевый
     // return api.post(`/russia/${places.id}`, {})
-    return api.post(`/check/`, {places})
+    return api.post(`/check/`, {
+      places
+    })
       .then((response) => {
         if (response.status === 200) {
-          dispatch(Operation.loadData());
+          dispatch(Operation.loadData(places));
           // тут добавить отображение ошибок или если все хорошо
         }
+      })
+      .catch((err) => {
+        dispatch(ActionActive.setValidationData(places));
+        console.log(err);
       });
   },
-  loadData: () => (dispatch, getState, api) => {
+  loadData: (places) => (dispatch, getState, api) => {
     return api.get(`/mistakes`)
       .then((response) => {
         console.log(response);
         dispatch(setIdDataLoaded(true, ``));
+        dispatch(ActionActive.setValidationData(places));
         // тут добавить отображение ошибок или если все хорошо
       });
-  }
+  },
+
 };
 /**
  * @param {status} status bool-ево значение.
