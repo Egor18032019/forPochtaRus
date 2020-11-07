@@ -11,7 +11,6 @@ class Mistake extends PureComponent {
 
   render() {
     const {place} = this.props;
-    console.log(place);
     if (place) {
       return (
         <li>{place.town}, {place.index}, {place.street}, {place.home}</li>
